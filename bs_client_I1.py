@@ -9,6 +9,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((host, port))
 try:
           
+          
          with s.connect((host, port)) :
 
               s.sendall(b'Meoooo !')
