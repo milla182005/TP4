@@ -1,7 +1,7 @@
 import socket
 import sys
 
-host = '10.1.1.20'
+host = '10.1.1.2'
 port = 13337
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -9,7 +9,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((host, port))
 try:
           
-          
+
          with s.connect((host, port)) :
 
               s.sendall(b'Meoooo !')
