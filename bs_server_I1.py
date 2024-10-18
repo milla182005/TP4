@@ -13,6 +13,7 @@ print('Connected by', addr)
 
 while True:
 
+
     try:
         data = conn.recv(1024)
 
