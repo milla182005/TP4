@@ -9,7 +9,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((host, port))
 try:
     data = s.recv(1024)
-    
+
     print(f"{data.decode()}")
 
     user_input = input("Que veux-tu envoyer au serveur : ")
@@ -17,7 +17,7 @@ try:
 
     data = s.recv(1024)
     if data:
-        print(f"Réponse du serveur : {repr(data)}")
+        print(f"Réponse du serveur : {data.decode()}")
 
         sys.exit(0)
 
