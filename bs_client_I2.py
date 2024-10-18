@@ -8,7 +8,9 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 s.connect((host, port))
 try:
-    s.sendall("Connecté avec succès au serveur {host} sur le port {port}".encode())
+    data = s.recv(1024)
+    
+    print(f"{data.decode()}")
 
     user_input = input("Que veux-tu envoyer au serveur : ")
     s.sendall(user_input.encode())

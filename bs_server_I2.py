@@ -20,9 +20,7 @@ while True:
 
         try:
             data = conn.recv(1024)
-
             if not data: break
-        
             client_message = data.decode()
             print(f"Message reçu du client: {client_message.encode()} : {data}")
 
