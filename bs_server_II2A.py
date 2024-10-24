@@ -43,5 +43,5 @@ def start_server(ip, port):
                 logging.warning("Aucun client connecté depuis plus d'une minute.")
                 time.sleep(60)  
 if __name__ == "__main__":
-    start_server('127.0.0.1', 8888)  
+    start_server('10.1.1.2', 8888)  
 
