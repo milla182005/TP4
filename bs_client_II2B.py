@@ -26,4 +26,4 @@ def connect_to_server(ip, port, message):
         logging.error(f"Impossible de se connecter au serveur {ip} sur le port {port}.")
 
 if __name__ == "__main__":
-    connect_to_server('10.1.1.2', 8888, "Hello, Server!") 
+    connect_to_server('127.0.0.1', 8888, "Hello, Server!") 
