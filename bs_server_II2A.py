@@ -8,7 +8,7 @@ def check_port(port):
     if port < 1024 or port > 65535:
         print("erreur")
         sysexit(1)
-    return port
+    return True
 
 def check_ip(ip):
     return ip
