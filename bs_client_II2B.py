@@ -5,8 +5,9 @@ from datetime import datetime
 
 
 def check_port(port):
+    port = int(port)
     if port < 1024 or port > 65535:
-        raise argparse.ArgumentTypeError(f"Le port doit être entre 1024 et 65535.")
+        print("Le port doit être entre 1024 et 65535.")
     return port
 
 def check_ip(ip):
