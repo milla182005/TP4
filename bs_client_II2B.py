@@ -1,36 +1,45 @@
-import logging
 import socket
+import sys
+import argparse
+from datetime import datetime
 
-logging.basicConfig(
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S',
-    level=logging.INFO,
-    handlers=[
-        logging.FileHandler('/tmp/bs_client_II2B.log')
-    ]
-)
+parser = argparse.ArgumentParser()
 
-logging.info("Démarrage du client pour tester le fichier de log.")
+parser.add_argument("-p", "--port", type=int, default=13337, help="Le port sur lequel le serveur écoute (par défaut 13337)")
+
+parser.add_argument("-l", "--l  ", type=str, required=True, help="L'adresse IP sur laquelle le serveur écoute")
+
+args = parser.parse_args()
+
+host = args.listen
+port = args.port
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+s.connect((host, port))
+try:
+    data = s.recv(1024)
+
+    print(f"{data.decode()}")
+
+    user_input = input("Que veux-tu envoyer au serveur : ")
+    s.sendall(user_input.encode())
+
+    data = s.recv(1024)
+    if data:
+        print(f"Réponse du serveur : {data.decode()}")
+
+        sys.exit(0)
+
+except Exception as e:
+   print(f"Error :Impossible de se connecter au serveur {host} sur le port {port}. Détails {e}")
+
+   sys.exit(1)
+
+   def log(msg: str, log_level: str):
+           now = datetime.now()
+           with open('/tmp/bs_client_II2B.log', "a") as log_file:
+             log_file.write(f"{now} {log_level} {msg}\n")
+log("INFO", "Connexion réussie à <IP>:<PORT>.")
 
 
-
-def connect_to_server(ip, port, message):
-    try:
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
-            client_socket.connect((ip, port))
-            logging.info(f"Connexion réussie à {ip}:{port}.")
-            
-           
-            client_socket.sendall(message.encode())
-            logging.info(f"Message envoyé au serveur {ip}:{port} : \"{message}\".")
-            
-            
-            response = client_socket.recv(1024).decode()
-            logging.info(f"Réponse reçue du serveur {ip}:{port} : \"{response}\".")
-    except ConnectionRefusedError:
-        logging.error(f"Impossible de se connecter au serveur {ip} sur le port {port}.")
-    except socket.error as e:
-        logging.error(f"Erreur de connexion : {e}")
-
-if __name__ == "__main__":
-    connect_to_server('10.1.1.2', 8888, "Hello, Server!")  

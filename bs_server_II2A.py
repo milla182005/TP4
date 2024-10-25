@@ -1,47 +1,61 @@
-import logging
 import socket
-import time
+import logging
+import argparse
 from datetime import datetime
 
-logging.basicConfig(
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S',
-    level=logging.DEBUG,
-    handlers=[
-        logging.StreamHandler(),  
-        logging.FileHandler('/var/log/bs_server/bs_server.log')  
-    ]
-)
+parser = argparse.ArgumentParser()
 
-def start_server(ip, port):
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:
-        server_socket.bind((ip, port))
-        server_socket.listen()
+parser.add_argument("-p", "--port", type=int, default=13337, help="Le port sur lequel le serveur écoute (par défaut 13337)")
 
-        logging.info("Lancement du serveur")
-        logging.info(f"Le serveur tourne sur {ip}:{port}")
+parser.add_argument("-l", "--l  ", type=str, required=True, help="L'adresse IP sur laquelle le serveur écoute")
 
-        last_client_time = datetime.now()
+args = parser.parse_args()
 
-        while True:
-            try:
-                client_socket, client_address = server_socket.accept()
-                with client_socket:
-                    logging.info(f"Un client ({client_address[0]}) s'est connecté.")
-                    last_client_time = datetime.now()
+host = args.listen
+port = args.port
 
-                    message = client_socket.recv(1024).decode()
-                    if message:
-                        logging.info(f"Le client {client_address[0]} a envoyé \"{message}\".")
-                        response = f"Message reçu : {message}"
-                        client_socket.sendall(response.encode())
-                        logging.info(f"Réponse envoyée au client {client_address[0]} : \"{response}\".")
-            except Exception as e:
-                logging.error(f"Erreur lors de la connexion avec le client : {e}")
+print(f"Le serveur va écouter sur l'adresse {args.listen} et le port {args.port}.")
 
-            if (datetime.now() - last_client_time).seconds > 60:
-                logging.warning("Aucun client connecté depuis plus d'une minute.")
-                time.sleep(60)  
-if __name__ == "__main__":
-    start_server('10.1.1.2', 8888)  
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((host, port))
+
+
+print(f"Serveur en écoute sur {host}:{port}")
+
+
+while True:
+        s.listen(1)
+        conn, addr = s.accept()
+
+        print(f"Un client vient de se co et son IP c'est {addr[0]}.")
+        
+        conn.sendall(b"Hi mate !")
+
+        try:
+            data = conn.recv(1024)
+            if not data: break
+            client_message = data.decode()
+            print(f"Message reçu du client: {client_message}")
+
+            if "meo" in client_message.lower():
+                        response = "Meo à toi confrère."
+            elif "waf" in client_message.lower():
+                        response = "ptdr t ki"
+            else:
+                        response = "Mes respects humble humain."
+
+            conn.sendall(response.encode())
+
+        except socket.error:
+          print("Erreur lors de la réception du message.")
+
+          def log(msg: str, log_level: str):
+           now = datetime.now()
+           with open('/tmp/bs_client_II2B.log', "a") as log_file:
+             log_file.write(f"{now} {log_level} {msg}\n")
+log("INFO", "Le serveur tourne sur <IP>:<port>")
+
+
+conn.close()
 
