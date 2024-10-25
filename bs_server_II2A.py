@@ -1,10 +1,12 @@
 import socket
 import argparse
 from datetime import datetime
+from sys import exit as sysexit
 
 def check_port(port):
     if port < 1024 or port > 65535:
-        raise argparse.ArgumentTypeError(f"Le port doit être entre 1024 et 65535.")
+        print("erreur")
+        sysexit(1)
     return port
 
 def check_ip(ip):
