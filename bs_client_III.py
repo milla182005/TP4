@@ -38,19 +38,7 @@ try:
     validate_expression = data.encode()
 
     data = s.recv(1024)
-    while True:
-            user_input = input("Entrez une opération arithmétique (ou 'exit' pour quitter) : ")
-            if user_input.lower() == 'exit':
-                break
-            
-            if validate_expression(user_input):
-                s.sendall(user_input.encode())
-                data = s.recv(1024)
-                if data:
-                    print(f"Réponse du serveur : {data.decode()}")
-            else:
-                print("Expression invalide. Veuillez entrer une opération sous la forme : 'a op b' (où a et b sont des entiers et op est +, -, ou *).")
-
+    
 except Exception as e:
    print(f"Error :Impossible de se connecter au serveur {host} sur le port {port}. Détails {e}")
 

@@ -13,6 +13,10 @@ def check_port(port):
 def check_ip(ip):
     return ip
 
+def log(msg: str, log_level: str):
+    now = datetime.now()
+    with open('/tmp/bs_client_II2B.log', "a") as log_file:
+        log_file.write(f"{now} {log_level} {msg}\n")
 
 parser = argparse.ArgumentParser()
 
@@ -61,10 +65,6 @@ while True:
         except socket.error:
           print("Erreur lors de la réception du message.")
 
-          def log(msg: str, log_level: str):
-           now = datetime.now()
-           with open('/tmp/bs_client_II2B.log', "a") as log_file:
-             log_file.write(f"{now} {log_level} {msg}\n")
 log("INFO", "Le serveur tourne sur <IP>:<port>")
 
 
