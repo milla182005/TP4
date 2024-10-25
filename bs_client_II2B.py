@@ -1,15 +1,18 @@
 import logging
 import socket
 
-
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S',
     level=logging.INFO,
     handlers=[
-        logging.FileHandler('/tmp/bs_client_II2B.log')  
+        logging.FileHandler('/tmp/bs_client_II2B.log')
     ]
 )
+
+logging.info("Démarrage du client pour tester le fichier de log.")
+
+
 
 def connect_to_server(ip, port, message):
     try:
