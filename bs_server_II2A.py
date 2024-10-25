@@ -4,8 +4,7 @@ from datetime import datetime
 from sys import exit as sysexit
 
 def check_port(port):
-    print('yo')
-    print(type(port))
+    port = int(port)
     if port < 1024 or port > 65535:
         print("erreur")
         sysexit(1)
