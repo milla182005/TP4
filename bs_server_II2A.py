@@ -16,9 +16,9 @@ def check_ip(ip):
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("-p", "--port", type=check_port, default=13337, help="Le port sur lequel le serveur écoute (par défaut 13337)")
+parser.add_argument("-p", "--port", type=int, default=13337, help="Le port sur lequel le serveur écoute (par défaut 13337)")
 
-parser.add_argument("-l", "--listen", type=check_ip, required=True, help="L'adresse IP sur laquelle le serveur écoute")
+parser.add_argument("-l", "--listen", type=str, required=True, help="L'adresse IP sur laquelle le serveur écoute")
 
 args = parser.parse_args()
 
