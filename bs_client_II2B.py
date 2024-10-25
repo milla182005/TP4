@@ -7,7 +7,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S',
     level=logging.INFO,
     handlers=[
-        logging.FileHandler('/tmp/bs_client.log')  
+        logging.FileHandler('/tmp/bs_client_II2B.log')  
     ]
 )
 
