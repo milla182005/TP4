@@ -33,9 +33,9 @@ print(f"Le serveur va écouter sur l'adresse {args.listen} et le port {args.port
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 s.bind((host, port))
-
-
+log("INFO", "Le serveur tourne sur <IP>:<port>")
 print(f"Serveur en écoute sur {host}:{port}")
 
 
@@ -53,9 +53,7 @@ while True:
             client_message = data.decode()
             print(f"Message reçu du client: {client_message}")
 
-            client_message = data.decode()
             try:
-                       
                 result = eval(client_message)
                 response = str(result)
                 conn.sendall(response.encode())
@@ -63,10 +61,6 @@ while True:
                 response = f"Erreur dans l'évaluation : {str(e)}"
 
         except socket.error:
-          print("Erreur lors de la réception du message.")
-
-log("INFO", "Le serveur tourne sur <IP>:<port>")
-
+            print("Erreur lors de la réception du message.")
 
 conn.close()
-
